@@ -1,0 +1,35 @@
+# 四、邮箱服务配置
+# 整合邮件配置
+spring:
+  mail:
+    # smtp服务主机  qq邮箱则为smtp.qq.com
+    host: smtp.163.com
+    # 服务协议 smtp为发送邮件
+    protocol: smtp
+    # 编码集
+    default-encoding: UTF-8
+    # 发送邮件的账户
+    username: H19807361445@163.com
+    # 授权码 邮箱服务器提供的授权码，不是你邮箱的密码
+    password: CSFSEJPVLUCFNREK
+    # 开启一些权限
+    test-connection: true
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+# 五、文件上传配置
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+# 六、阿里云OSS
+aliyun:
+  oss:
+    endpoint: https://oss-cn-chengdu.aliyuncs.com
+    accessKeyId: LTAI5tFCuK7GHrC7ASodeTs2
+    accessKeySecret: ASBgFTUtp6u1vgRNryYq2FBNtM2RGz
+    bucketName: supermap2023

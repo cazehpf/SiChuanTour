@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cazehpf.mapper.UserMapper">
+<!--    "update User set " +-->
+<!--    "userName = #{userName}, " +-->
+<!--    "userPSW = #{userPSW}, " +-->
+<!--    "signature=#{signature}, " +-->
+<!--    "sex=#{sex}, " +-->
+<!--    "address=#{address}, " +-->
+<!--    "hobby=#{hobby}, " +-->
+<!--    "age=#{age}, " +-->
+<!--    "tel=#{tel}, " +-->
+<!--    "work=#{work} where userID=#{userID}"-->
+    <!--更新员工-->
+    <update id="setUserByID">
+        update User
+        <set>
+            <if test="userName != null and userName != ''">
+                userName = #{userName},
+            </if>
+            <if test="userPSW != null and userPSW != ''">
+                userPSW = #{userPSW},
+            </if>
+            <if test="signature!= null and signature != ''">
+                signature = #{signature},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="address != null and address != ''">
+                address = #{address},
+            </if>
+            <if test="hobby != null and hobby != ''">
+                hobby = #{hobby},
+            </if>
+            <if test="work != null and work != ''">
+                work = #{work},
+            </if>
+            <if test="age != null">
+                age = #{age},
+            </if>
+            <if test="tel != null and tel!=''">
+                tel = #{tel},
+            </if>
+            <if test="userImg != null and userImg!=''">
+                userImg = #{userImg}
+            </if>
+        </set>
+        where userID = #{userID}
+    </update>
+
+    <!--根据用户ID查询用户获赞数目-->
+    <select id="selectLikedNumByID" resultType="java.lang.Integer">
+        select count(*) as likedNum from
+                (SELECT commentID from Comment where commentUserID=#{userID}) as nowUserComment
+                    RIGHT JOIN Liked ON nowUserComment.commentID=Liked.likeCommentID
+    </select>
+
+
+    <!--根据用户ID查询其评论并分页展示-->
+    <select id="getUserComments" resultType="com.cazehpf.entity.UserComment">
+        select * from (select commentID,commentInterestID,commentUserID,if(likeCommentID is NULL,0,count(*)) as count,
+        commentTime,commentContent,commentScore,interestName
+        from Comment
+        LEFT JOIN Interest on commentInterestID=interestID
+        LEFT JOIN  Liked on  commentID=likeCommentID GROUP BY commentID
+        HAVING commentUserID=#{userID}
+        ORDER BY  commentTime DESC
+        ) as UserComment
+
+        where (commentTime between #{startTime} and #{endTime}) and interestName like concat('%',#{interestFilter},'%')
+
+
+    </select>
+
+    <!--根据用户ID查询其被点赞-->
+    <select id="getUserLiked" resultType="com.cazehpf.entity.UserLiked">
+        SELECT commentInterestID,interestName,likeTime,userImg,userName,commentContent from Liked
+        INNER JOIN Comment on likeCommentID = commentID
+        INNER JOIN User on likeUserID = userID
+        INNER JOIN Interest on commentInterestID =interestID
+        where likeUserID!=#{userID} and commentUserID = #{userID}
+        ORDER BY likeTime DESC
+    </select>
+</mapper>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cazehpf.mapper.InterestMapper">
+
+
+    <!--条件查询-->
+    <select id="list" resultType="com.cazehpf.entity.Interest">
+        select *
+        from Interest
+        <where>
+            <if test="name != null and name != ''">
+                interestName like concat('%',#{name},'%')
+            </if>
+
+            <if test="level != null and level.size()!=0 ">
+                and interestLevel in
+                <foreach collection="level" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="city != null  and city != ''">
+                and interestCity= #{city}
+            </if>
+            <if test="county != null  and county != ''">
+                and interestCounty= #{county}
+            </if>
+        </where>
+
+    </select>
+    <!--根据用户ID查询用参观景点条件查询-->
+    <select id="listByUser" resultType="com.cazehpf.entity.Interest">
+        select *
+        from Interest
+        <where>
+            <if test="name != null and name != ''">
+                interestName like concat('%',#{name},'%')
+            </if>
+
+            <if test="level != null and level.size()!=0 ">
+                and interestLevel in
+                <foreach collection="level" item="item" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </if>
+
+            <if test="city != null  and city != ''">
+                and interestCity= #{city}
+            </if>
+            <if test="county != null  and county != ''">
+                and interestCounty= #{county}
+            </if>
+            and interestID in (select collectInterestID from Collect where collectUserID =#{userID} )
+        </where>
+
+    </select>
+
+    <!--    根据景点ID和用户ID查询详细评论-->
+
+    <select id="getCommentsByIDs" resultType="com.cazehpf.entity.InterestComment">
+        select commentID,
+               commentInterestID,
+               if(likeCommentID is NULL, 0, count(*)) as count,sum(if(likeUserID =#{userID},1,0)) as myLike,
+userName,userImg,commentTime,commentContent,commentScore
+        from Comment
+            INNER JOIN User
+        on commentUserID=userID
+            LEFT JOIN Liked on commentID=likeCommentID
+        GROUP BY commentID
+        HAVING commentInterestID=#{interestID}
+        ORDER BY  commentTime DESC
+    </select>
+<!--    查询评论top10景点-->
+    <select id="getInterestTop" resultType="com.cazehpf.entity.InterestTop">
+        select interestName,count(*) as count from Comment
+            inner join Interest on commentInterestID=interestID
+        group by interestName
+        ORDER BY  count desc
+            limit 0,10
+    </select>
+
+
+</mapper>
