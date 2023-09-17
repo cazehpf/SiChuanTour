@@ -4,6 +4,7 @@
 
 - node.js 环境
 - npm 包管理器
+  
   _ps:本组本地测试所用版本为 node 版本 18.12.1；npm 版本为 8.19.2。_
 
 #### 1.2 后端环境准备
@@ -11,7 +12,8 @@
 - java8——jdk1.8
 - maven 环境配置
 - 本组 java 后端开发采用 Idea 集成开发环境
-  _ps: 本组测试所用为 java version “1.8.0_333”；由于系统数据库放在云端 mysql 存储，所以不需要 mysql 数据库环境准备。如果需要本地数据库环境准备。请在 navicat 软件中运行 supermap2023.sql。并修改 application.properties 配置为自己本地的 mysql 配置。_
+  
+  _ps: 本组测试所用为 java version “1.8.0_333”；由于系统数据库放在云端 mysql 存储，所以不需要 mysql 数据库环境准备。如果需要本地数据库环境准备。请在 navicat 软件中运行《系统源程序》文件夹里面的【mysql脚本文件】里面的 supermap2023.sql。并修改 application.properties 配置为自己本地的 mysql 配置。_
 
 #### 1.3 SuperMap iServer 服务发布准备
 
@@ -37,12 +39,14 @@ _ps:本组本地测试所用 SuperMap iServer 版本为 supermap-iserver-11.0.1-
 再运行：
 `npm run serve`
 启动前端，生成访问链接。或者在后端服务启动后，直接点击 build 好的文件夹里面 index.html 也行。
+
 _ps:提交前端源代码已经包含打包好的文件夹 build 文件夹。_
 
 #### 2.2 后端部分
 
 对《系统源程序》里面的【后端源代码】部分。使用 Idea 打开源码文件夹后，运行启动类启动后端程序。或者在有 jdk8 的环境下运行【后端源代码】文件夹里面的 target 打包好的 jar 包，在 cmd 环境下运行：
 `java -jar tourgis-0.0.1-SNAPSHOT.jar > log.txt 2>&1 &`
+
 _ps:后端启动后占用端口号为 8088 端口_
 
 #### 2.3 SuperMap iServer 服务部分
