@@ -35,8 +35,10 @@ _ps:本组本地测试所用 SuperMap iServer 版本为 supermap-iserver-11.0.1-
 #### 2.1 前端部分
 
 对《系统源程序》里面的【前端源代码】部分。使用 vsCode 或者 cmd 打开前端源码文件夹，在终端中先运行：
+
 `npm install`
 再运行：
+
 `npm run serve`
 启动前端，生成访问链接。或者在后端服务启动后，直接点击 build 好的文件夹里面 index.html 也行。
 
@@ -45,6 +47,7 @@ _ps:提交前端源代码已经包含打包好的文件夹 build 文件夹。_
 #### 2.2 后端部分
 
 对《系统源程序》里面的【后端源代码】部分。使用 Idea 打开源码文件夹后，运行启动类启动后端程序。或者在有 jdk8 的环境下运行【后端源代码】文件夹里面的 target 打包好的 jar 包，在 cmd 环境下运行：
+
 `java -jar tourgis-0.0.1-SNAPSHOT.jar > log.txt 2>&1 &`
 
 _ps:后端启动后占用端口号为 8088 端口_
