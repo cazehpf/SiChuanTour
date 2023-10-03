@@ -1,10 +1,7 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : SuperMap2023
-Source Server Version : 50742
-Source Host           : 58.87.89.148:3306
-Source Database       : supermap2023
+
 
 Target Server Type    : MYSQL
 Target Server Version : 50742
