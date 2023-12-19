@@ -1,4 +1,4 @@
-const key = "fc00df4960b42590a3484b4885d372c0"; //
+const key = "自己申请的高德天气的key"; //
 async function getWeather(cityAdcode) {
   try {
     // 使用高德地图的天气API获取气温信息
